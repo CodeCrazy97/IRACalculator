@@ -59,7 +59,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         balanceTF.setText("22000");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("Inflation %:");
+        jLabel4.setText("Inflation rate (%):");
 
         roiTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         roiTF.setText("10.1");
@@ -77,7 +77,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         jLabel6.setText("Retirement age:");
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel3.setText("Rate of return:");
+        jLabel3.setText("Rate of return (%):");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel5.setText("Current age:");
@@ -185,7 +185,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addContainerGap(243, Short.MAX_VALUE))
+                        .addContainerGap(180, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         jPanel2Layout.setVerticalGroup(
@@ -194,7 +194,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -205,7 +205,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -216,7 +216,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -225,22 +225,26 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     }//GEN-LAST:event_inflationTFActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        double realROI = Double.parseDouble(roiTF.getText());
+        double realROI = Double.parseDouble(roiTF.getText());  // realROI - the IRA's interest rate minus inflation rate.
         realROI -= Double.parseDouble(inflationTF.getText());
         realROI /= 100.0;
 
-        double balance = Double.parseDouble(balanceTF.getText());
-        double beginningBalance = balance;
-        int age = Integer.parseInt(currentAgeTF.getText());
-        int retirementAge = Integer.parseInt(retirementAgeTF.getText());
+        double balance = Double.parseDouble(balanceTF.getText());  // balance - the amount of money in the IRA
+        double beginningBalance = balance;                         // beginningBalance - stores the initial amount of money in the IRA
+        int age = Integer.parseInt(currentAgeTF.getText());        // age - the current age of the user in years
+        int retirementAge = Integer.parseInt(retirementAgeTF.getText()); // retirementAge - age at which the user plans on retiring
 
-        int yearsToContribute = Integer.parseInt(yearsToContributeTF.getText());
+        int yearsToContribute = Integer.parseInt(yearsToContributeTF.getText());  // yearsToContribute - the number of years the user will contribute to the IRA
         double yearlyContributions = Double.parseDouble(yearlyContributionsTF.getText());
         double totalContributions = 0.0;
 
-        boolean interestAlert = false;
-        jPanel2.setVisible(true);
-        while (age != retirementAge) {
+        
+        boolean interestAlert = false;  // Tells whether user has been informed of interest being greater than contributions.
+        
+        jPanel2.setVisible(true);  // Unhide the panel that shows an overview of IRA.
+        jTextArea1.append("(Contributions shown below do not include beginning balance.)\n");
+        jTextArea1.append(" Initial balance: $" + (int) balance + "\n");
+        while (age != retirementAge){
             balance *= (1.0 + realROI);
             if (yearsToContribute > 0) {
                 totalContributions += yearlyContributions;
@@ -251,15 +255,16 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             String balanceWithCommas = createStringWithCommas((int) balance);
             String contributionsWithCommas = createStringWithCommas((int) (totalContributions));
             if (!interestAlert && ((int) totalContributions + beginningBalance) < ((int) balance - beginningBalance)) {
-                jTextArea1.append(" Interest finally beats contributions at age " + age + "!!!\n");
-                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas);
+                jTextArea1.append(" Interest beats contributions at age " + age + "!!!\n");
+                jTextArea1.append(" IRA worth at age " + age + ": $" + balanceWithCommas);
                 jTextArea1.append(". Contributions: $" + contributionsWithCommas + "\n");
-                interestAlert = true;
-            } else if (age < retirementAge) {
-                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas);
+                interestAlert = true;  
+            } else if (age < retirementAge) {  
+                jTextArea1.append(" IRA worth at age " + age + ": $" + balanceWithCommas);
                 jTextArea1.append(". Contributions: $" + contributionsWithCommas + "\n");
-            } else {
-                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas + ". Total contributions: $" + contributionsWithCommas + "\n\n\t(Above contributions do NOT include beginning balance.)");
+            } else {  // Reached retirement age.
+                jTextArea1.append("---------------------------------------------------------------------------------------");
+                jTextArea1.append(" \nIRA worth at age " + age + ": $" + balanceWithCommas + ". Total contributions: $" + contributionsWithCommas);
             }
         }
         jTextArea1.append("\n");

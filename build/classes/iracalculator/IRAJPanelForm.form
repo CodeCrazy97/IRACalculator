@@ -19,7 +19,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="101" max="32767" attributes="0"/>
+              <EmptySpace pref="164" max="32767" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -33,7 +33,7 @@
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -149,7 +149,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Inflation %:"/>
+            <Property name="text" type="java.lang.String" value="Inflation rate (%):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="roiTF">
@@ -197,7 +197,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Rate of return:"/>
+            <Property name="text" type="java.lang.String" value="Rate of return (%):"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -258,7 +258,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="243" max="32767" attributes="0"/>
+                          <EmptySpace pref="180" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                   </Group>
@@ -271,7 +271,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="454" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="558" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
