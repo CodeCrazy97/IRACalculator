@@ -12,5 +12,6 @@ public class IRACalculator {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setExtendedState(frame.getExtendedState() | frame.MAXIMIZED_BOTH);
     }    
 }

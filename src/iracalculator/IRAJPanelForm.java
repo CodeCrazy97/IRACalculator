@@ -16,7 +16,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
      */
     public IRAJPanelForm() {
         initComponents();
-        resultsLabel.setVisible(false);
+        jPanel2.setVisible(false);
     }
 
     /**
@@ -28,8 +28,6 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        resultsLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         yearlyContributionsTF = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -45,46 +43,64 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         yearsToContributeTF = new javax.swing.JTextField();
         currentAgeTF = new javax.swing.JTextField();
         inflationTF = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
 
-        jButton1.setText("Calculate");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        yearlyContributionsTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        yearlyContributionsTF.setText("5200");
 
-        resultsLabel.setText("jLabel8");
-
-        yearlyContributionsTF.setText("500");
-
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Current balance:");
 
-        balanceTF.setText("20000");
+        balanceTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        balanceTF.setText("22000");
 
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("Inflation %:");
 
+        roiTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         roiTF.setText("10.1");
 
+        retirementAgeTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         retirementAgeTF.setText("65");
 
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel7.setText("Years you contribute till retirement:");
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setText("Yearly contributions:");
 
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setText("Retirement age:");
 
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Rate of return:");
 
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel5.setText("Current age:");
 
+        yearsToContributeTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         yearsToContributeTF.setText("28");
 
+        currentAgeTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         currentAgeTF.setText("22");
 
+        inflationTF.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         inflationTF.setText("2.75");
         inflationTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inflationTFActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jButton1.setText("Calculate");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -94,23 +110,26 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(yearsToContributeTF)
-                    .addComponent(retirementAgeTF)
-                    .addComponent(currentAgeTF)
-                    .addComponent(inflationTF)
-                    .addComponent(roiTF)
-                    .addComponent(yearlyContributionsTF)
-                    .addComponent(balanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(yearsToContributeTF)
+                            .addComponent(retirementAgeTF)
+                            .addComponent(currentAgeTF)
+                            .addComponent(inflationTF)
+                            .addComponent(roiTF)
+                            .addComponent(yearlyContributionsTF)
+                            .addComponent(balanceTF, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,6 +163,38 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(yearsToContributeTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel8.setText("IRA Summary by Year...");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addContainerGap(243, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -153,28 +204,19 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(221, 221, 221)
-                                .addComponent(jButton1)))
-                        .addGap(0, 352, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(resultsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(22, 22, 22)
-                .addComponent(resultsLabel)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -196,11 +238,8 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         double yearlyContributions = Double.parseDouble(yearlyContributionsTF.getText());
         double totalContributions = 0.0;
 
-        System.out.println("beg. age: " + age);
-        System.out.println("roi: " + realROI);
-        System.out.println("retirement age: " + retirementAge);
-        System.out.println();
         boolean interestAlert = false;
+        jPanel2.setVisible(true);
         while (age != retirementAge) {
             balance *= (1.0 + realROI);
             if (yearsToContribute > 0) {
@@ -209,22 +248,21 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 yearsToContribute--;
             }
             age++;
+            String balanceWithCommas = createStringWithCommas((int) balance);
+            String contributionsWithCommas = createStringWithCommas((int) (totalContributions));
             if (!interestAlert && ((int) totalContributions + beginningBalance) < ((int) balance - beginningBalance)) {
-                System.out.println("Interest finally beats contributions!!!");
-                System.out.println("Retirement account worth at age " + age + ": $" + ((int) balance));
-                System.out.println("Contributions: $" + ((int) totalContributions + beginningBalance) + " (this includes the beginning balance!!!)\n");
+                jTextArea1.append(" Interest finally beats contributions at age " + age + "!!!\n");
+                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas);
+                jTextArea1.append(". Contributions: $" + contributionsWithCommas + "\n");
                 interestAlert = true;
+            } else if (age < retirementAge) {
+                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas);
+                jTextArea1.append(". Contributions: $" + contributionsWithCommas + "\n");
             } else {
-                System.out.println("Retirement account worth at age " + age + ": $" + ((int) balance));
-                System.out.println("Contributions: $" + ((int) totalContributions + beginningBalance) + " (this includes the beginning balance!!!)\n");
+                jTextArea1.append(" Retirement account worth at age " + age + ": $" + balanceWithCommas + ". Total contributions: $" + contributionsWithCommas + "\n\n\t(Above contributions do NOT include beginning balance.)");
             }
         }
-        resultsLabel.setVisible(true);
-        String balanceWithCommas = createStringWithCommas((int) balance);
-        String contributionsWithCommas = createStringWithCommas((int) totalContributions);
-
-        resultsLabel.setText("Retirement account worth at age " + age + ": $" + balanceWithCommas + ". Total contributions: $" + contributionsWithCommas + " (not including beginning balance!)");
-        System.out.println("------------------------------------------------------------------------------------------\n");
+        jTextArea1.append("\n");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static String createStringWithCommas(int n) {
@@ -253,8 +291,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel resultsLabel;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField retirementAgeTF;
     private javax.swing.JTextField roiTF;
     private javax.swing.JTextField yearlyContributionsTF;
