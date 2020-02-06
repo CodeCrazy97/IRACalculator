@@ -465,12 +465,14 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             double yearlyContributions = 0;
             if (!jPanel3.isVisible()) {
                 yearlyContributions = Double.parseDouble(yearlyContributionsTF.getText());
-            } 
+            }
             double totalContributions = 0.0;
 
             jPanel2.setVisible(true);  // Unhide the panel that shows an overview of IRA.
             jTextArea1.setText("");
-            jTextArea1.append("(Contributions shown below do not include beginning balance.)\n");
+            if (yearlyContributions > 0 || (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) || (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) || (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
+                jTextArea1.append("(Contributions shown below do not include beginning balance.)\n");
+            }
             jTextArea1.append(" Initial balance: $" + (int) balance + "\n");
 
             int beginAge1 = -2;
