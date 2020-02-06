@@ -471,7 +471,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             jPanel2.setVisible(true);  // Unhide the panel that shows an overview of IRA.
             jTextArea1.setText("");
             if (yearlyContributions > 0 || (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) || (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) || (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
-                jTextArea1.append("(Contributions shown below do not include beginning balance.)\n");
+                jTextArea1.append(" (Contributions shown below do not include beginning balance.)\n");
             }
             jTextArea1.append(" Initial balance: $" + (int) balance + "\n");
 
@@ -536,7 +536,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean inputIsValid() throws Exception {
+    private void inputIsValid() throws Exception {
         int retirementAge = Integer.parseInt("" + retirementAgejComboBox1.getSelectedItem());
         int currentAge = Integer.parseInt("" + currentAgejComboBox1.getSelectedItem());
 
@@ -577,7 +577,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         if (currentAge > retirementAge) {
             throw new Exception("Current age cannot be greater than retirement age.");
         }
-        return true;
+        
+        // Make sure there is no overlap in the age spans.
+        if ((beginAge1 > 0 && ((beginAge1 >= beginAge2 && beginAge1 < endAge2) || (beginAge1 >= beginAge3 && beginAge1 < endAge3))) || (beginAge2 > 0 && ((beginAge2 >= beginAge1 && beginAge2 < endAge1) || (beginAge2 >= beginAge3 && beginAge2 < endAge3))) || (beginAge3 > 0 && ((beginAge3 >= beginAge2 && beginAge3 < endAge2) || (beginAge3 >= beginAge1 && beginAge3 < endAge1)))) {
+            throw new Exception("Can't have overlap between the different age spans. If you wish to not use a span, simply leave one of the drop-downs as \"Not used\" for that span.");
+        }
     }
 
     private void moreJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreJButtonActionPerformed
