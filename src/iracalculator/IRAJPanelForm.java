@@ -582,7 +582,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
 
     private void moreJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreJButtonActionPerformed
         if (moreJButton.getText().equals("More")) {
-            moreJButton.setText("Hide");
+            moreJButton.setText("Less");
 
             // Select reasonable ages.
             beginAgejComboBox1.setSelectedIndex(0);

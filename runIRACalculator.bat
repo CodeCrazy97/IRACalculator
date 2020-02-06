@@ -1,3 +1,3 @@
-cd "C:\Users\Ethan\Documents\Projects\Java\IRACalculator\dist"
+cd "%~dp0dist"
 java -jar IRACalculator.jar
 exit
