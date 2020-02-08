@@ -532,7 +532,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             }
             jTextArea1.append("\n");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
