@@ -557,6 +557,32 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 throw new Exception("Invalid input for yearly contributions: " + yearlyContributionsTF.getText()
                         + "\nMust be a numeric value.");
             }
+        } else // Other contribution text fields are visible. Check their inputs.
+        {
+            if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) {
+                try {
+                    double amount = Double.parseDouble(contributionAmountTF1.getText());
+                } catch (NumberFormatException nfe) {
+                    throw new Exception("Invalid input for first span of yearly contributions: " + contributionAmountTF1.getText()
+                            + "\nMust be a numeric value.");
+                }
+            }
+            if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) {
+                try {
+                    double amount = Double.parseDouble(contributionAmountTF2.getText());
+                } catch (NumberFormatException nfe) {
+                    throw new Exception("Invalid input for second span of yearly contributions: " + contributionAmountTF2.getText()
+                            + "\nMust be a numeric value.");
+                }
+            }
+            if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0) {
+                try {
+                    double amount = Double.parseDouble(contributionAmountTF3.getText());
+                } catch (NumberFormatException nfe) {
+                    throw new Exception("Invalid input for third span of yearly contributions: " + contributionAmountTF3.getText()
+                            + "\nMust be a numeric value.");
+                }
+            }
         }
 
         // make sure beginning balance is valid
