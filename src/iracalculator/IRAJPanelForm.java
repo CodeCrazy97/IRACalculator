@@ -5,6 +5,7 @@
  */
 package iracalculator;
 
+import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +25,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         jPanel3.setVisible(false);
         retirementAgejComboBox1.setSelectedIndex(64);
         currentAgejComboBox1.setSelectedIndex(21);
+
     }
 
     /**
@@ -128,9 +130,29 @@ public class IRAJPanelForm extends javax.swing.JPanel {
 
         retirementAgejComboBox1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         retirementAgejComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100" }));
+        retirementAgejComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                retirementAgejComboBox1ItemStateChanged(evt);
+            }
+        });
+        retirementAgejComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retirementAgejComboBox1ActionPerformed(evt);
+            }
+        });
 
         currentAgejComboBox1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         currentAgejComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100" }));
+        currentAgejComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                currentAgejComboBox1ItemStateChanged(evt);
+            }
+        });
+        currentAgejComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                currentAgejComboBox1ActionPerformed(evt);
+            }
+        });
 
         moreJButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         moreJButton.setText("More");
@@ -636,7 +658,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
 
         // Check that all begin ages are greater than or equal to the current age.
         if ((beginAge1 < currentAge && beginAge1 > 0) || (beginAge2 < currentAge && beginAge2 > 0) || (beginAge3 < currentAge && beginAge3 > 0)) {
-            throw new Exception("All begin ages must be greater than or equal to current ages.");
+            throw new Exception("All begin ages must be greater than or equal to current age.");
         }
 
         // Check that end ages are all less than the retirement age.
@@ -687,6 +709,40 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 + "\nof the drop-downs in the last group as \"Not Used\").";
         JOptionPane.showMessageDialog(null, message);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void currentAgejComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentAgejComboBox1ActionPerformed
+
+    }//GEN-LAST:event_currentAgejComboBox1ActionPerformed
+
+    private void currentAgejComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_currentAgejComboBox1ItemStateChanged
+        boolean reselect = false;
+        if (evt.getStateChange() == ItemEvent.SELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+            reselect = true;
+            JOptionPane.showMessageDialog(null, "Invalid Age Selections!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+            currentAgePreviousItemIndex = Integer.parseInt(evt.getItem().toString()) - 1; // index will be age - 1
+        }
+        if (reselect) {
+            currentAgejComboBox1.setSelectedIndex(currentAgePreviousItemIndex); // keep old index selected
+        }
+    }//GEN-LAST:event_currentAgejComboBox1ItemStateChanged
+
+    private void retirementAgejComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_retirementAgejComboBox1ItemStateChanged
+//        boolean reselect = false;
+//        if (evt.getStateChange() == ItemEvent.SELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+//            reselect = true;
+//            JOptionPane.showMessageDialog(null, "Invalid Age Selections!", "Error", JOptionPane.ERROR_MESSAGE);
+//        } else if (evt.getStateChange() == ItemEvent.DESELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+//            retirementAgePreviousItemIndex = Integer.parseInt(evt.getItem().toString()) - 1; // index will be age - 1
+//        }
+//        if (reselect) {
+//            retirementAgejComboBox1.setSelectedIndex(retirementAgePreviousItemIndex); // keep old index selected
+//        }
+    }//GEN-LAST:event_retirementAgejComboBox1ItemStateChanged
+
+    private void retirementAgejComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirementAgejComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retirementAgejComboBox1ActionPerformed
 
     private void showRegularContributions(boolean value) {
         if (!value) {
@@ -759,4 +815,6 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     private javax.swing.JTextField roiTF;
     private javax.swing.JTextField yearlyContributionsTF;
     // End of variables declaration//GEN-END:variables
+    private static int currentAgePreviousItemIndex = 0;
+    private static int retirementAgePreviousItemIndex = 0;
 }
