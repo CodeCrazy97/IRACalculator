@@ -6,6 +6,14 @@
 package iracalculator;
 
 import java.awt.event.ItemEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +23,8 @@ import javax.swing.JOptionPane;
 public class IRAJPanelForm extends javax.swing.JPanel {
 
     public static String textInYearlyContributionsTF;
+    public String path
+            = "";
 
     /**
      * Creates new form IRAJPanelForm
@@ -26,6 +36,39 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         retirementAgejComboBox1.setSelectedIndex(64);
         currentAgejComboBox1.setSelectedIndex(21);
 
+        path
+                = System.getProperty("user.dir");
+        path
+                = path.replace("\\",
+                        "\\\\");
+
+        File file
+                = new File(path + "\\src\\iracalculator\\oldData");
+
+        BufferedReader br
+                = null;
+        try {
+            br
+                    = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException ex) {
+            System.out.println("Error caught - line 46");
+        }
+
+        String st;
+        try {
+            while ((st
+                    = br.readLine()) != null) {
+                try {
+                    Double.parseDouble(st);
+                    balanceTF.setText(st);
+                } catch (NumberFormatException e) {
+                    // cannot convert the value in the file to a double
+                    System.out.println("Unable to convert stored value to a double.");
+                }
+            }
+        } catch (IOException ex) {
+            System.out.println("Error line 60");
+        }
     }
 
     /**
@@ -487,86 +530,157 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             // Before doing anything else, make sure the user entered valid data.
             inputIsValid();
 
-            double realROI = Double.parseDouble(roiTF.getText());  // realROI - the IRA's interest rate minus inflation rate.
-            realROI -= Double.parseDouble(inflationTF.getText());
-            realROI /= 100.0;
+            FileWriter myWriter
+                    = new FileWriter(
+                            path + "\\src\\iracalculator\\oldData");
+            myWriter.write(balanceTF.getText());
+            myWriter.close();
 
-            double balance = Double.parseDouble(balanceTF.getText());  // balance - the amount of money in the IRA
-            int age = Integer.parseInt("" + currentAgejComboBox1.getSelectedItem());        // age - the current age of the user in years
-            int retirementAge = Integer.parseInt("" + retirementAgejComboBox1.getSelectedItem()); // retirementAge - age at which the user plans on retiring
+            double realROI
+                    = Double.parseDouble(roiTF.getText());  // realROI - the IRA's interest rate minus inflation rate.
+            realROI
+                    -= Double.parseDouble(inflationTF.getText());
+            realROI
+                    /= 100.0;
 
-            int yearsToContribute = Integer.parseInt(contributionAmountTF1.getText());  // yearsToContribute - the number of years the user will contribute to the IRA
-            double yearlyContributions = 0;
+            double balance
+                    = Double.parseDouble(balanceTF.getText());  // balance - the amount of money in the IRA
+            int age
+                    = Integer.parseInt("" + currentAgejComboBox1.
+                            getSelectedItem());        // age - the current age of the user in years
+            int retirementAge
+                    = Integer.parseInt("" + retirementAgejComboBox1.
+                            getSelectedItem()); // retirementAge - age at which the user plans on retiring
+
+            int yearsToContribute
+                    = Integer.parseInt(contributionAmountTF1.getText());  // yearsToContribute - the number of years the user will contribute to the IRA
+            double yearlyContributions
+                    = 0;
             if (!jPanel3.isVisible()) {
-                yearlyContributions = Double.parseDouble(yearlyContributionsTF.getText());
+                yearlyContributions
+                        = Double.parseDouble(yearlyContributionsTF.getText());
             }
-            double totalContributions = 0.0;
+            double totalContributions
+                    = 0.0;
 
             jPanel2.setVisible(true);  // Unhide the panel that shows an overview of IRA.
             jTextArea1.setText("");
-            if (yearlyContributions > 0 || (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) || (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) || (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
-                jTextArea1.append(" (Contributions shown below do not include beginning balance.)\n");
+            if (yearlyContributions > 0 || (beginAgejComboBox1.
+                    getSelectedIndex() != 0 && endAgejComboBox1.
+                    getSelectedIndex() != 0) || (beginAgejComboBox2.
+                    getSelectedIndex() != 0 && endAgejComboBox2.
+                    getSelectedIndex() != 0) || (beginAgejComboBox3.
+                    getSelectedIndex() != 0 && endAgejComboBox3.
+                    getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
+                jTextArea1.append(
+                        " (Contributions shown below do not include beginning balance.)\n");
             }
             jTextArea1.append(" Initial balance: $" + (int) balance + "\n");
 
-            int beginAge1 = -2;
-            int endAge1 = -1;
-            int beginAge2 = -2;
-            int endAge2 = -1;
-            int beginAge3 = -2;
-            int endAge3 = -1;
-            double contribute1 = 0;
-            double contribute2 = 0;
-            double contribute3 = 0;
-            if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) {
-                beginAge1 = Integer.parseInt("" + beginAgejComboBox1.getSelectedItem());
-                endAge1 = Integer.parseInt("" + endAgejComboBox1.getSelectedItem());
-                contribute1 = Double.parseDouble("" + contributionAmountTF1.getText());
+            int beginAge1
+                    = -2;
+            int endAge1
+                    = -1;
+            int beginAge2
+                    = -2;
+            int endAge2
+                    = -1;
+            int beginAge3
+                    = -2;
+            int endAge3
+                    = -1;
+            double contribute1
+                    = 0;
+            double contribute2
+                    = 0;
+            double contribute3
+                    = 0;
+            if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.
+                    getSelectedIndex() != 0) {
+                beginAge1
+                        = Integer.parseInt("" + beginAgejComboBox1.
+                                getSelectedItem());
+                endAge1
+                        = Integer.parseInt("" + endAgejComboBox1.
+                                getSelectedItem());
+                contribute1
+                        = Double.parseDouble("" + contributionAmountTF1.
+                                getText());
             }
-            if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) {
-                beginAge2 = Integer.parseInt("" + beginAgejComboBox2.getSelectedItem());
-                endAge2 = Integer.parseInt("" + endAgejComboBox2.getSelectedItem());
-                contribute2 = Double.parseDouble("" + contributionAmountTF2.getText());
+            if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.
+                    getSelectedIndex() != 0) {
+                beginAge2
+                        = Integer.parseInt("" + beginAgejComboBox2.
+                                getSelectedItem());
+                endAge2
+                        = Integer.parseInt("" + endAgejComboBox2.
+                                getSelectedItem());
+                contribute2
+                        = Double.parseDouble("" + contributionAmountTF2.
+                                getText());
             }
-            if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0) {
-                beginAge3 = Integer.parseInt("" + beginAgejComboBox3.getSelectedItem());
-                endAge3 = Integer.parseInt("" + endAgejComboBox3.getSelectedItem());
-                contribute3 = Double.parseDouble("" + contributionAmountTF3.getText());
+            if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.
+                    getSelectedIndex() != 0) {
+                beginAge3
+                        = Integer.parseInt("" + beginAgejComboBox3.
+                                getSelectedItem());
+                endAge3
+                        = Integer.parseInt("" + endAgejComboBox3.
+                                getSelectedItem());
+                contribute3
+                        = Double.parseDouble("" + contributionAmountTF3.
+                                getText());
             }
             while (age != retirementAge) {
                 if (jPanel3.isVisible()) {
                     // If the current age is between one of those specified by data entered in More details, then use that contribution amount.
                     if (age >= beginAge1 && age < endAge1) {
-                        yearlyContributions = contribute1;
+                        yearlyContributions
+                                = contribute1;
                     } else if (age >= beginAge2 && age < endAge2) {
-                        yearlyContributions = contribute2;
+                        yearlyContributions
+                                = contribute2;
                     } else if (age >= beginAge3 && age < endAge3) {
-                        yearlyContributions = contribute3;
+                        yearlyContributions
+                                = contribute3;
                     } else {
-                        yearlyContributions = 0;
+                        yearlyContributions
+                                = 0;
                     }
                 }
 
-                balance *= (1.0 + realROI);
+                balance
+                        *= (1.0 + realROI);
                 if (yearsToContribute > 0) {
-                    totalContributions += yearlyContributions;
-                    balance += yearlyContributions;
+                    totalContributions
+                            += yearlyContributions;
+                    balance
+                            += yearlyContributions;
                     yearsToContribute--;
                 }
                 age++;
-                String balanceWithCommas = createStringWithCommas((int) balance);
-                String contributionsWithCommas = createStringWithCommas((int) (totalContributions));
+                String balanceWithCommas
+                        = createStringWithCommas((int) balance);
+                String contributionsWithCommas
+                        = createStringWithCommas((int) (totalContributions));
                 if (age < retirementAge) {
-                    jTextArea1.append(" IRA worth at age " + age + ": $" + balanceWithCommas);
-                    jTextArea1.append(". Contributions: $" + contributionsWithCommas + "\n");
+                    jTextArea1.append(
+                            " IRA worth at age " + age + ": $" + balanceWithCommas);
+                    jTextArea1.append(
+                            ". Contributions: $" + contributionsWithCommas + "\n");
                 } else {  // Reached retirement age.
-                    jTextArea1.append("---------------------------------------------------------------------------------------");
-                    jTextArea1.append("\n IRA worth at age " + age + " (adjusted to inflation): $" + balanceWithCommas + ".\n Total contributions: $" + contributionsWithCommas);
+                    jTextArea1.append(
+                            "---------------------------------------------------------------------------------------");
+                    jTextArea1.append(
+                            "\n IRA worth at age " + age + " (adjusted to inflation): $" + balanceWithCommas + ".\n Total contributions: $" + contributionsWithCommas);
                 }
             }
             jTextArea1.append("\n");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -574,34 +688,52 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         if (yearlyContributionsTF.isEnabled()) {  // will be using this text field for the amount contributed per year
             // make sure yearly contributions is valid
             try {
-                double amount = Double.parseDouble(yearlyContributionsTF.getText());
+                double amount
+                        = Double.parseDouble(yearlyContributionsTF.getText());
             } catch (NumberFormatException nfe) {
-                throw new Exception("Invalid input for yearly contributions: " + yearlyContributionsTF.getText()
+                throw new Exception(
+                        "Invalid input for yearly contributions: " + yearlyContributionsTF.
+                        getText()
                         + "\nMust be a numeric value.");
             }
         } else // Other contribution text fields are visible. Check their inputs.
         {
-            if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) {
+            if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.
+                    getSelectedIndex() != 0) {
                 try {
-                    double amount = Double.parseDouble(contributionAmountTF1.getText());
+                    double amount
+                            = Double.
+                            parseDouble(contributionAmountTF1.getText());
                 } catch (NumberFormatException nfe) {
-                    throw new Exception("Invalid input for first span of yearly contributions: " + contributionAmountTF1.getText()
+                    throw new Exception(
+                            "Invalid input for first span of yearly contributions: " + contributionAmountTF1.
+                            getText()
                             + "\nMust be a numeric value.");
                 }
             }
-            if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) {
+            if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.
+                    getSelectedIndex() != 0) {
                 try {
-                    double amount = Double.parseDouble(contributionAmountTF2.getText());
+                    double amount
+                            = Double.
+                            parseDouble(contributionAmountTF2.getText());
                 } catch (NumberFormatException nfe) {
-                    throw new Exception("Invalid input for second span of yearly contributions: " + contributionAmountTF2.getText()
+                    throw new Exception(
+                            "Invalid input for second span of yearly contributions: " + contributionAmountTF2.
+                            getText()
                             + "\nMust be a numeric value.");
                 }
             }
-            if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0) {
+            if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.
+                    getSelectedIndex() != 0) {
                 try {
-                    double amount = Double.parseDouble(contributionAmountTF3.getText());
+                    double amount
+                            = Double.
+                            parseDouble(contributionAmountTF3.getText());
                 } catch (NumberFormatException nfe) {
-                    throw new Exception("Invalid input for third span of yearly contributions: " + contributionAmountTF3.getText()
+                    throw new Exception(
+                            "Invalid input for third span of yearly contributions: " + contributionAmountTF3.
+                            getText()
                             + "\nMust be a numeric value.");
                 }
             }
@@ -609,61 +741,90 @@ public class IRAJPanelForm extends javax.swing.JPanel {
 
         // make sure beginning balance is valid
         try {
-            double beginBal = Double.parseDouble(balanceTF.getText());
+            double beginBal
+                    = Double.parseDouble(balanceTF.getText());
         } catch (NumberFormatException nfe) {
-            throw new Exception("Invalid input for current balance: " + balanceTF.getText()
+            throw new Exception(
+                    "Invalid input for current balance: " + balanceTF.getText()
                     + "\nMust be a numeric value.");
         }
         // check ROI
         try {
-            double roi = Double.parseDouble(roiTF.getText());
+            double roi
+                    = Double.parseDouble(roiTF.getText());
         } catch (NumberFormatException nfe) {
             throw new Exception("Invalid input for ROI: " + roiTF.getText()
                     + "\nMust be a numeric value.");
         }
         // check inflation rate
         try {
-            double inflation = Double.parseDouble(inflationTF.getText());
+            double inflation
+                    = Double.parseDouble(inflationTF.getText());
         } catch (NumberFormatException nfe) {
-            throw new Exception("Invalid input for inflation rate: " + inflationTF.getText()
+            throw new Exception(
+                    "Invalid input for inflation rate: " + inflationTF.getText()
                     + "\nMust be a numeric value.");
         }
 
-        int retirementAge = Integer.parseInt("" + retirementAgejComboBox1.getSelectedItem());
-        int currentAge = Integer.parseInt("" + currentAgejComboBox1.getSelectedItem());
+        int retirementAge
+                = Integer.parseInt("" + retirementAgejComboBox1.
+                        getSelectedItem());
+        int currentAge
+                = Integer.parseInt("" + currentAgejComboBox1.getSelectedItem());
 
-        int beginAge1 = -2;
-        int endAge1 = -1;
-        int beginAge2 = -2;
-        int endAge2 = -1;
-        int beginAge3 = -2;
-        int endAge3 = -1;
-        if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.getSelectedIndex() != 0) {
-            beginAge1 = Integer.parseInt("" + beginAgejComboBox1.getSelectedItem());
-            endAge1 = Integer.parseInt("" + endAgejComboBox1.getSelectedItem());
+        int beginAge1
+                = -2;
+        int endAge1
+                = -1;
+        int beginAge2
+                = -2;
+        int endAge2
+                = -1;
+        int beginAge3
+                = -2;
+        int endAge3
+                = -1;
+        if (beginAgejComboBox1.getSelectedIndex() != 0 && endAgejComboBox1.
+                getSelectedIndex() != 0) {
+            beginAge1
+                    = Integer.
+                    parseInt("" + beginAgejComboBox1.getSelectedItem());
+            endAge1
+                    = Integer.parseInt("" + endAgejComboBox1.getSelectedItem());
         }
-        if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.getSelectedIndex() != 0) {
-            beginAge2 = Integer.parseInt("" + beginAgejComboBox2.getSelectedItem());
-            endAge2 = Integer.parseInt("" + endAgejComboBox2.getSelectedItem());
+        if (beginAgejComboBox2.getSelectedIndex() != 0 && endAgejComboBox2.
+                getSelectedIndex() != 0) {
+            beginAge2
+                    = Integer.
+                    parseInt("" + beginAgejComboBox2.getSelectedItem());
+            endAge2
+                    = Integer.parseInt("" + endAgejComboBox2.getSelectedItem());
         }
-        if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.getSelectedIndex() != 0) {
-            beginAge3 = Integer.parseInt("" + beginAgejComboBox3.getSelectedItem());
-            endAge3 = Integer.parseInt("" + endAgejComboBox3.getSelectedItem());
+        if (beginAgejComboBox3.getSelectedIndex() != 0 && endAgejComboBox3.
+                getSelectedIndex() != 0) {
+            beginAge3
+                    = Integer.
+                    parseInt("" + beginAgejComboBox3.getSelectedItem());
+            endAge3
+                    = Integer.parseInt("" + endAgejComboBox3.getSelectedItem());
         }
 
         // Check that all begin ages are less than end ages.
         if (beginAge1 >= endAge1 || beginAge2 >= endAge2 || beginAge3 >= endAge3) {
-            throw new Exception("Check custom contributions ages! Begin ages must all be less than end ages.");
+            throw new Exception(
+                    "Check custom contributions ages! Begin ages must all be less than end ages.");
         }
 
         // Check that all begin ages are greater than or equal to the current age.
         if ((beginAge1 < currentAge && beginAge1 > 0) || (beginAge2 < currentAge && beginAge2 > 0) || (beginAge3 < currentAge && beginAge3 > 0)) {
-            throw new Exception("All begin ages must be greater than or equal to current age.");
+            throw new Exception(
+                    "All begin ages must be greater than or equal to current age.");
         }
 
         // Check that end ages are all less than the retirement age.
         if (endAge1 > retirementAge || endAge2 > retirementAge || endAge3 > retirementAge) {
-            throw new Exception("Retirement age must be greater than all end ages.");
+            throw new Exception(
+                    "Retirement age must be greater than all end ages.");
         }
 
         if (currentAge >= retirementAge) {
@@ -672,15 +833,18 @@ public class IRAJPanelForm extends javax.swing.JPanel {
 
         // Make sure there is no overlap in the age spans.
         if ((beginAge1 > 0 && ((beginAge1 >= beginAge2 && beginAge1 < endAge2) || (beginAge1 >= beginAge3 && beginAge1 < endAge3))) || (beginAge2 > 0 && ((beginAge2 >= beginAge1 && beginAge2 < endAge1) || (beginAge2 >= beginAge3 && beginAge2 < endAge3))) || (beginAge3 > 0 && ((beginAge3 >= beginAge2 && beginAge3 < endAge2) || (beginAge3 >= beginAge1 && beginAge3 < endAge1)))) {
-            throw new Exception("Can't have overlap between the different age spans. If you wish to not use a span, simply leave one of the drop-downs as \"Not used\" for that span.");
+            throw new Exception(
+                    "Can't have overlap between the different age spans. If you wish to not use a span, simply leave one of the drop-downs as \"Not used\" for that span.");
         }
     }
 
     private void moreJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreJButtonActionPerformed
-        if (moreJButton.getText().equals("More")) {
+        if (moreJButton.getText().
+                equals("More")) {
             moreJButton.setText("Less");
 
-            textInYearlyContributionsTF = yearlyContributionsTF.getText();  // Save the text that the user may have entered. Will display it later if user clicks "Less".
+            textInYearlyContributionsTF
+                    = yearlyContributionsTF.getText();  // Save the text that the user may have entered. Will display it later if user clicks "Less".
 
             // Select reasonable ages.
             beginAgejComboBox1.setSelectedIndex(0);
@@ -701,13 +865,15 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     }//GEN-LAST:event_moreJButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String message = "In the three fields below, enter your begin and end age "
+        String message
+                = "In the three fields below, enter your begin and end age "
                 + "\nfor different contribution timespans. For example, you can "
                 + "\nspecify that you contribute $2,500 per year when you are 25-33 "
                 + "\nyears old, $3,000 when you are 33-37 years old, and that you "
                 + "\ndon't contribute anything when you are over 37 (just leave one "
                 + "\nof the drop-downs in the last group as \"Not Used\").";
-        JOptionPane.showMessageDialog(null, message);
+        JOptionPane.showMessageDialog(null,
+                message);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void currentAgejComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentAgejComboBox1ActionPerformed
@@ -715,12 +881,21 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     }//GEN-LAST:event_currentAgejComboBox1ActionPerformed
 
     private void currentAgejComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_currentAgejComboBox1ItemStateChanged
-        boolean reselect = false;
-        if (evt.getStateChange() == ItemEvent.SELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
-            reselect = true;
-            JOptionPane.showMessageDialog(null, "Invalid Age Selections!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (evt.getStateChange() == ItemEvent.DESELECTED && currentAgejComboBox1.getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
-            currentAgePreviousItemIndex = Integer.parseInt(evt.getItem().toString()) - 1; // index will be age - 1
+        boolean reselect
+                = false;
+        if (evt.getStateChange() == ItemEvent.SELECTED && currentAgejComboBox1.
+                getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+            reselect
+                    = true;
+            JOptionPane.showMessageDialog(null,
+                    "Invalid Age Selections!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED && currentAgejComboBox1.
+                getSelectedIndex() >= retirementAgejComboBox1.getSelectedIndex()) {
+            currentAgePreviousItemIndex
+                    = Integer.parseInt(evt.getItem().
+                            toString()) - 1; // index will be age - 1
         }
         if (reselect) {
             currentAgejComboBox1.setSelectedIndex(currentAgePreviousItemIndex); // keep old index selected
@@ -753,12 +928,17 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     }
 
     public static String createStringWithCommas(int n) {
-        String strWithCommas = "" + (int) n;
-        int index = strWithCommas.length();
-        int threeCount = 0;
+        String strWithCommas
+                = "" + (int) n;
+        int index
+                = strWithCommas.length();
+        int threeCount
+                = 0;
         while (index >= 1) {
             if (threeCount % 3 == 0 && threeCount != 0) {
-                strWithCommas = strWithCommas.substring(0, index) + "," + strWithCommas.substring(index);
+                strWithCommas
+                        = strWithCommas.substring(0,
+                                index) + "," + strWithCommas.substring(index);
             }
             index--;
             threeCount++;
@@ -815,6 +995,8 @@ public class IRAJPanelForm extends javax.swing.JPanel {
     private javax.swing.JTextField roiTF;
     private javax.swing.JTextField yearlyContributionsTF;
     // End of variables declaration//GEN-END:variables
-    private static int currentAgePreviousItemIndex = 0;
-    private static int retirementAgePreviousItemIndex = 0;
+    private static int currentAgePreviousItemIndex
+            = 0;
+    private static int retirementAgePreviousItemIndex
+            = 0;
 }
