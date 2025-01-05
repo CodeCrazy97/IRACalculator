@@ -33,8 +33,6 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         initComponents();
         jPanel2.setVisible(false);
         jPanel3.setVisible(false);
-        retirementAgejComboBox1.setSelectedIndex(64);
-        currentAgejComboBox1.setSelectedIndex(21);
 
         path
                 = System.getProperty("user.dir");
@@ -45,30 +43,48 @@ public class IRAJPanelForm extends javax.swing.JPanel {
         File file
                 = new File(path + "\\src\\iracalculator\\oldData");
 
+        int currentAgeStored = 24;
+        int retirementAgeStored = 64;
+        
         BufferedReader br
                 = null;
         try {
             br
                     = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException ex) {
-            System.out.println("Error caught - line 46");
-        }
 
-        String st;
-        try {
-            while ((st
-                    = br.readLine()) != null) {
-                try {
-                    Double.parseDouble(st);
-                    balanceTF.setText(st);
-                } catch (NumberFormatException e) {
-                    // cannot convert the value in the file to a double
-                    System.out.println("Unable to convert stored value to a double.");
+            String st;
+            try {
+                int currentIndex = 0;
+                while ((st
+                        = br.readLine()) != null) {
+                    try {
+                        if (currentIndex == 0) {
+                            Double.parseDouble(st);
+                            balanceTF.setText(st);
+                        } else if (currentIndex == 1) {
+                            currentAgeStored = Integer.parseInt(st);
+                        } else if (currentIndex == 2) {
+                            retirementAgeStored = Integer.parseInt(st);
+                        }
+                        currentIndex++;
+                    } catch (NumberFormatException e) {
+                        // cannot convert the value in the file to a double
+                        System.out.println("Unable to convert stored value to a double.");
+                    }
                 }
+            } catch (IOException ex) {
+                System.out.println("Error line 60");
             }
-        } catch (IOException ex) {
-            System.out.println("Error line 60");
+        } catch (FileNotFoundException ex) {
+            try {
+                file.createNewFile();
+            } catch (IOException ex1) {
+                System.out.println("Failed to create file.");
+            }
         }
+        
+        retirementAgejComboBox1.setSelectedIndex(retirementAgeStored);        
+        currentAgejComboBox1.setSelectedIndex(currentAgeStored);
     }
 
     /**
@@ -534,6 +550,10 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                     = new FileWriter(
                             path + "\\src\\iracalculator\\oldData");
             myWriter.write(balanceTF.getText());
+            myWriter.append('\n');
+            myWriter.write("" + (currentAgejComboBox1.getSelectedIndex()));
+            myWriter.append('\n');
+            myWriter.write("" + (retirementAgejComboBox1.getSelectedIndex()));
             myWriter.close();
 
             double realROI
@@ -567,11 +587,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             jTextArea1.setText("");
             if (yearlyContributions > 0 || (beginAgejComboBox1.
                     getSelectedIndex() != 0 && endAgejComboBox1.
-                    getSelectedIndex() != 0) || (beginAgejComboBox2.
-                    getSelectedIndex() != 0 && endAgejComboBox2.
-                    getSelectedIndex() != 0) || (beginAgejComboBox3.
-                    getSelectedIndex() != 0 && endAgejComboBox3.
-                    getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
+                            getSelectedIndex() != 0) || (beginAgejComboBox2.
+                            getSelectedIndex() != 0 && endAgejComboBox2.
+                            getSelectedIndex() != 0) || (beginAgejComboBox3.
+                            getSelectedIndex() != 0 && endAgejComboBox3.
+                            getSelectedIndex() != 0)) {  // If user is going to contribute something, then let them know that their contributions don't include the beginning balance.
                 jTextArea1.append(
                         " (Contributions shown below do not include beginning balance.)\n");
             }
@@ -693,7 +713,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
             } catch (NumberFormatException nfe) {
                 throw new Exception(
                         "Invalid input for yearly contributions: " + yearlyContributionsTF.
-                        getText()
+                                getText()
                         + "\nMust be a numeric value.");
             }
         } else // Other contribution text fields are visible. Check their inputs.
@@ -703,11 +723,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 try {
                     double amount
                             = Double.
-                            parseDouble(contributionAmountTF1.getText());
+                                    parseDouble(contributionAmountTF1.getText());
                 } catch (NumberFormatException nfe) {
                     throw new Exception(
                             "Invalid input for first span of yearly contributions: " + contributionAmountTF1.
-                            getText()
+                                    getText()
                             + "\nMust be a numeric value.");
                 }
             }
@@ -716,11 +736,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 try {
                     double amount
                             = Double.
-                            parseDouble(contributionAmountTF2.getText());
+                                    parseDouble(contributionAmountTF2.getText());
                 } catch (NumberFormatException nfe) {
                     throw new Exception(
                             "Invalid input for second span of yearly contributions: " + contributionAmountTF2.
-                            getText()
+                                    getText()
                             + "\nMust be a numeric value.");
                 }
             }
@@ -729,11 +749,11 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 try {
                     double amount
                             = Double.
-                            parseDouble(contributionAmountTF3.getText());
+                                    parseDouble(contributionAmountTF3.getText());
                 } catch (NumberFormatException nfe) {
                     throw new Exception(
                             "Invalid input for third span of yearly contributions: " + contributionAmountTF3.
-                            getText()
+                                    getText()
                             + "\nMust be a numeric value.");
                 }
             }
@@ -788,7 +808,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 getSelectedIndex() != 0) {
             beginAge1
                     = Integer.
-                    parseInt("" + beginAgejComboBox1.getSelectedItem());
+                            parseInt("" + beginAgejComboBox1.getSelectedItem());
             endAge1
                     = Integer.parseInt("" + endAgejComboBox1.getSelectedItem());
         }
@@ -796,7 +816,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 getSelectedIndex() != 0) {
             beginAge2
                     = Integer.
-                    parseInt("" + beginAgejComboBox2.getSelectedItem());
+                            parseInt("" + beginAgejComboBox2.getSelectedItem());
             endAge2
                     = Integer.parseInt("" + endAgejComboBox2.getSelectedItem());
         }
@@ -804,7 +824,7 @@ public class IRAJPanelForm extends javax.swing.JPanel {
                 getSelectedIndex() != 0) {
             beginAge3
                     = Integer.
-                    parseInt("" + beginAgejComboBox3.getSelectedItem());
+                            parseInt("" + beginAgejComboBox3.getSelectedItem());
             endAge3
                     = Integer.parseInt("" + endAgejComboBox3.getSelectedItem());
         }
